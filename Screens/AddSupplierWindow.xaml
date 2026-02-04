@@ -1,0 +1,32 @@
+﻿<Window x:Class="ProdAndLog.Screens.AddSupplierWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProdAndLog.Screens"
+        mc:Ignorable="d"
+        Title="Добавить поставщика" Height="460" Width="450">
+    <Grid>
+        <StackPanel Margin="15">
+            <TextBlock Text="ИНН (уникальный, 10 или 12 цифр):" Margin="0,0,0,2"/>
+            <TextBox x:Name="txtInn" MaxLength="12" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Наименование предприятия:" Margin="0,0,0,2"/>
+            <TextBox x:Name="txtName" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Контактные данные (телефон, email):" Margin="0,0,0,2"/>
+            <TextBox x:Name="txtContact" AcceptsReturn="True" TextWrapping="Wrap" Height="60" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Рейтинг надёжности (1–5):" Margin="0,0,0,2"/>
+            <TextBox x:Name="txtRating" Text="3" MaxLength="1" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Условия оплаты:" Margin="0,0,0,2"/>
+            <TextBox x:Name="txtPayment" Text="Оплата по факту" Margin="0,0,0,15"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Сохранить" Click="Save_Click" Width="90" Margin="0,0,10,0"/>
+                <Button Content="Отмена" Click="Cancel_Click" Width="90"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,1806 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище ProdAndLogModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BillOfMaterials">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="MaterialId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Position" Type="nvarchar" MaxLength="100" />
+          <Property Name="Department" Type="nvarchar" MaxLength="100" />
+          <Property Name="Qualifications" Type="nvarchar(max)" />
+          <Property Name="RateType" Type="nvarchar" MaxLength="20" />
+          <Property Name="RateAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Equipment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InventoryNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Model" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="100" />
+          <Property Name="CommissionDate" Type="date" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="MaintenanceSchedule" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="EquipmentUsageLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StageId" Type="int" Nullable="false" />
+          <Property Name="EquipmentId" Type="int" Nullable="false" />
+          <Property Name="UsageHours" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="LogDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="MinStock" Type="int" Nullable="false" />
+          <Property Name="MarketPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MaterialType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Article" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductionOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="PriorityLevel" Type="int" />
+          <Property Name="Deadline" Type="date" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedAt" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="ProductionStage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="OperationId" Type="int" Nullable="false" />
+          <Property Name="AssignedEmployeeId" Type="int" />
+          <Property Name="AssignedEquipmentId" Type="int" />
+          <Property Name="StartDate" Type="datetime2" Precision="7" />
+          <Property Name="EndDate" Type="datetime2" Precision="7" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductionStageStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierId" Type="int" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ExpectedDeliveryDate" Type="date" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PurchaseReceipt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="ReceiptDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="MaterialId" Type="int" Nullable="false" />
+          <Property Name="ReceivedQuantity" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="DefectQuantity" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="WarehouseId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QualityDefect">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StageId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="DetectedAt" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StockBalance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaterialId" Type="int" Nullable="false" />
+          <Property Name="WarehouseId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Inn" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ContactInfo" Type="nvarchar" MaxLength="500" />
+          <Property Name="ReliabilityRating" Type="int" />
+          <Property Name="PaymentTerms" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TechOperation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RouteId" Type="int" Nullable="false" />
+          <Property Name="OperationName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="SequenceNumber" Type="int" Nullable="false" />
+          <Property Name="DurationHours" Type="decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="TechRoute">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StageId" Type="int" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="HoursWorked" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="LogDate" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__BillOfMat__Mater__6B24EA82">
+          <End Role="Material" Type="Self.Material" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BillOfMaterials" Type="Self.BillOfMaterials" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BillOfMaterials">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BillOfMat__Produ__6A30C649">
+          <End Role="Product" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BillOfMaterials" Type="Self.BillOfMaterials" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BillOfMaterials">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Equipment__Equip__245D67DE">
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="1" />
+          <End Role="EquipmentUsageLog" Type="Self.EquipmentUsageLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentUsageLog">
+              <PropertyRef Name="EquipmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Equipment__Stage__236943A5">
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="1" />
+          <End Role="EquipmentUsageLog" Type="Self.EquipmentUsageLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionStage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentUsageLog">
+              <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Material__TypeId__5812160E">
+          <End Role="MaterialType" Type="Self.MaterialType" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productio__Assig__0C85DE4D">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionStage">
+              <PropertyRef Name="AssignedEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productio__Assig__0D7A0286">
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionStage">
+              <PropertyRef Name="AssignedEquipmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productio__Opera__0B91BA14">
+          <End Role="TechOperation" Type="Self.TechOperation" Multiplicity="1" />
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TechOperation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionStage">
+              <PropertyRef Name="OperationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productio__Order__0A9D95DB">
+          <End Role="ProductionOrder" Type="Self.ProductionOrder" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionStage">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productio__Produ__07C12930">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductionOrder" Type="Self.ProductionOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionOrder">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productio__Statu__0E6E26BF">
+          <End Role="ProductionStageStatus" Type="Self.ProductionStageStatus" Multiplicity="1" />
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionStageStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionStage">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseO__Statu__75A278F5">
+          <End Role="PurchaseOrderStatus" Type="Self.PurchaseOrderStatus" Multiplicity="1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrderStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseO__Suppl__74AE54BC">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseR__Mater__7B5B524B">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="PurchaseReceipt" Type="Self.PurchaseReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseReceipt">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseR__Order__7A672E12">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="1" />
+          <End Role="PurchaseReceipt" Type="Self.PurchaseReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseReceipt">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseR__Wareh__7C4F7684">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="PurchaseReceipt" Type="Self.PurchaseReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseReceipt">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QualityDe__Stage__123EB7A3">
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QualityDefect" Type="Self.QualityDefect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionStage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QualityDefect">
+              <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockBala__Mater__01142BA1">
+          <End Role="Material" Type="Self.Material" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StockBalance" Type="Self.StockBalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockBalance">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockBala__Wareh__02084FDA">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StockBalance" Type="Self.StockBalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockBalance">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TechOpera__Route__70DDC3D8">
+          <End Role="TechRoute" Type="Self.TechRoute" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TechOperation" Type="Self.TechOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TechRoute">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TechOperation">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TechRoute__Produ__6E01572D">
+          <End Role="Product" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TechRoute" Type="Self.TechRoute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TechRoute">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__EmployeeId__18EBB532">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRole__RoleId__1CBC4616">
+          <End Role="Role" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRole__UserId__1BC821DD">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WorkLog__Employe__208CD6FA">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="WorkLog" Type="Self.WorkLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkLog">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WorkLog__StageId__1F98B2C1">
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="1" />
+          <End Role="WorkLog" Type="Self.WorkLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionStage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkLog">
+              <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="Хранилище ProdAndLogModelContainer">
+          <EntitySet Name="BillOfMaterials" EntityType="Self.BillOfMaterials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Equipment" EntityType="Self.Equipment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EquipmentUsageLog" EntityType="Self.EquipmentUsageLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialType" EntityType="Self.MaterialType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductionOrder" EntityType="Self.ProductionOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductionStage" EntityType="Self.ProductionStage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductionStageStatus" EntityType="Self.ProductionStageStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrderStatus" EntityType="Self.PurchaseOrderStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseReceipt" EntityType="Self.PurchaseReceipt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QualityDefect" EntityType="Self.QualityDefect" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockBalance" EntityType="Self.StockBalance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TechOperation" EntityType="Self.TechOperation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TechRoute" EntityType="Self.TechRoute" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkLog" EntityType="Self.WorkLog" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BillOfMat__Mater__6B24EA82" Association="Self.FK__BillOfMat__Mater__6B24EA82">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="BillOfMaterials" EntitySet="BillOfMaterials" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BillOfMat__Produ__6A30C649" Association="Self.FK__BillOfMat__Produ__6A30C649">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="BillOfMaterials" EntitySet="BillOfMaterials" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Equipment__Equip__245D67DE" Association="Self.FK__Equipment__Equip__245D67DE">
+            <End Role="Equipment" EntitySet="Equipment" />
+            <End Role="EquipmentUsageLog" EntitySet="EquipmentUsageLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Equipment__Stage__236943A5" Association="Self.FK__Equipment__Stage__236943A5">
+            <End Role="ProductionStage" EntitySet="ProductionStage" />
+            <End Role="EquipmentUsageLog" EntitySet="EquipmentUsageLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Material__TypeId__5812160E" Association="Self.FK__Material__TypeId__5812160E">
+            <End Role="MaterialType" EntitySet="MaterialType" />
+            <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productio__Assig__0C85DE4D" Association="Self.FK__Productio__Assig__0C85DE4D">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="ProductionStage" EntitySet="ProductionStage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productio__Assig__0D7A0286" Association="Self.FK__Productio__Assig__0D7A0286">
+            <End Role="Equipment" EntitySet="Equipment" />
+            <End Role="ProductionStage" EntitySet="ProductionStage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productio__Opera__0B91BA14" Association="Self.FK__Productio__Opera__0B91BA14">
+            <End Role="TechOperation" EntitySet="TechOperation" />
+            <End Role="ProductionStage" EntitySet="ProductionStage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productio__Order__0A9D95DB" Association="Self.FK__Productio__Order__0A9D95DB">
+            <End Role="ProductionOrder" EntitySet="ProductionOrder" />
+            <End Role="ProductionStage" EntitySet="ProductionStage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productio__Produ__07C12930" Association="Self.FK__Productio__Produ__07C12930">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductionOrder" EntitySet="ProductionOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productio__Statu__0E6E26BF" Association="Self.FK__Productio__Statu__0E6E26BF">
+            <End Role="ProductionStageStatus" EntitySet="ProductionStageStatus" />
+            <End Role="ProductionStage" EntitySet="ProductionStage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseO__Statu__75A278F5" Association="Self.FK__PurchaseO__Statu__75A278F5">
+            <End Role="PurchaseOrderStatus" EntitySet="PurchaseOrderStatus" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseO__Suppl__74AE54BC" Association="Self.FK__PurchaseO__Suppl__74AE54BC">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseR__Mater__7B5B524B" Association="Self.FK__PurchaseR__Mater__7B5B524B">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="PurchaseReceipt" EntitySet="PurchaseReceipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseR__Order__7A672E12" Association="Self.FK__PurchaseR__Order__7A672E12">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+            <End Role="PurchaseReceipt" EntitySet="PurchaseReceipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseR__Wareh__7C4F7684" Association="Self.FK__PurchaseR__Wareh__7C4F7684">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="PurchaseReceipt" EntitySet="PurchaseReceipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QualityDe__Stage__123EB7A3" Association="Self.FK__QualityDe__Stage__123EB7A3">
+            <End Role="ProductionStage" EntitySet="ProductionStage" />
+            <End Role="QualityDefect" EntitySet="QualityDefect" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockBala__Mater__01142BA1" Association="Self.FK__StockBala__Mater__01142BA1">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="StockBalance" EntitySet="StockBalance" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockBala__Wareh__02084FDA" Association="Self.FK__StockBala__Wareh__02084FDA">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="StockBalance" EntitySet="StockBalance" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TechOpera__Route__70DDC3D8" Association="Self.FK__TechOpera__Route__70DDC3D8">
+            <End Role="TechRoute" EntitySet="TechRoute" />
+            <End Role="TechOperation" EntitySet="TechOperation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TechRoute__Produ__6E01572D" Association="Self.FK__TechRoute__Produ__6E01572D">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="TechRoute" EntitySet="TechRoute" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__EmployeeId__18EBB532" Association="Self.FK__User__EmployeeId__18EBB532">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRole__RoleId__1CBC4616" Association="Self.FK__UserRole__RoleId__1CBC4616">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRole__UserId__1BC821DD" Association="Self.FK__UserRole__UserId__1BC821DD">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WorkLog__Employe__208CD6FA" Association="Self.FK__WorkLog__Employe__208CD6FA">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="WorkLog" EntitySet="WorkLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WorkLog__StageId__1F98B2C1" Association="Self.FK__WorkLog__StageId__1F98B2C1">
+            <End Role="ProductionStage" EntitySet="ProductionStage" />
+            <End Role="WorkLog" EntitySet="WorkLog" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProdAndLogModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BillOfMaterial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="MaterialId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <NavigationProperty Name="Material" Relationship="Self.FK__BillOfMat__Mater__6B24EA82" FromRole="BillOfMaterials" ToRole="Material" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__BillOfMat__Produ__6A30C649" FromRole="BillOfMaterials" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Position" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Qualifications" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RateType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RateAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ProductionStages" Relationship="Self.FK__Productio__Assig__0C85DE4D" FromRole="Employee" ToRole="ProductionStage" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__User__EmployeeId__18EBB532" FromRole="Employee" ToRole="User" />
+          <NavigationProperty Name="WorkLogs" Relationship="Self.FK__WorkLog__Employe__208CD6FA" FromRole="Employee" ToRole="WorkLog" />
+        </EntityType>
+        <EntityType Name="Equipment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InventoryNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CommissionDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MaintenanceSchedule" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EquipmentUsageLogs" Relationship="Self.FK__Equipment__Equip__245D67DE" FromRole="Equipment" ToRole="EquipmentUsageLog" />
+          <NavigationProperty Name="ProductionStages" Relationship="Self.FK__Productio__Assig__0D7A0286" FromRole="Equipment" ToRole="ProductionStage" />
+        </EntityType>
+        <EntityType Name="EquipmentUsageLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StageId" Type="Int32" Nullable="false" />
+          <Property Name="EquipmentId" Type="Int32" Nullable="false" />
+          <Property Name="UsageHours" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Equipment" Relationship="Self.FK__Equipment__Equip__245D67DE" FromRole="EquipmentUsageLog" ToRole="Equipment" />
+          <NavigationProperty Name="ProductionStage" Relationship="Self.FK__Equipment__Stage__236943A5" FromRole="EquipmentUsageLog" ToRole="ProductionStage" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MinStock" Type="Int32" Nullable="false" />
+          <Property Name="MarketPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="BillOfMaterials" Relationship="Self.FK__BillOfMat__Mater__6B24EA82" FromRole="Material" ToRole="BillOfMaterials" />
+          <NavigationProperty Name="MaterialType" Relationship="Self.FK__Material__TypeId__5812160E" FromRole="Material" ToRole="MaterialType" />
+          <NavigationProperty Name="PurchaseReceipts" Relationship="Self.FK__PurchaseR__Mater__7B5B524B" FromRole="Material" ToRole="PurchaseReceipt" />
+          <NavigationProperty Name="StockBalances" Relationship="Self.FK__StockBala__Mater__01142BA1" FromRole="Material" ToRole="StockBalance" />
+        </EntityType>
+        <EntityType Name="MaterialType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Materials" Relationship="Self.FK__Material__TypeId__5812160E" FromRole="MaterialType" ToRole="Material" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Article" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BillOfMaterials" Relationship="Self.FK__BillOfMat__Produ__6A30C649" FromRole="Product" ToRole="BillOfMaterials" />
+          <NavigationProperty Name="ProductionOrders" Relationship="Self.FK__Productio__Produ__07C12930" FromRole="Product" ToRole="ProductionOrder" />
+          <NavigationProperty Name="TechRoutes" Relationship="Self.FK__TechRoute__Produ__6E01572D" FromRole="Product" ToRole="TechRoute" />
+        </EntityType>
+        <EntityType Name="ProductionOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="PriorityLevel" Type="Int32" />
+          <Property Name="Deadline" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Productio__Produ__07C12930" FromRole="ProductionOrder" ToRole="Product" />
+          <NavigationProperty Name="ProductionStages" Relationship="Self.FK__Productio__Order__0A9D95DB" FromRole="ProductionOrder" ToRole="ProductionStage" />
+        </EntityType>
+        <EntityType Name="ProductionStage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="OperationId" Type="Int32" Nullable="false" />
+          <Property Name="AssignedEmployeeId" Type="Int32" />
+          <Property Name="AssignedEquipmentId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="7" />
+          <Property Name="EndDate" Type="DateTime" Precision="7" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__Productio__Assig__0C85DE4D" FromRole="ProductionStage" ToRole="Employee" />
+          <NavigationProperty Name="Equipment" Relationship="Self.FK__Productio__Assig__0D7A0286" FromRole="ProductionStage" ToRole="Equipment" />
+          <NavigationProperty Name="EquipmentUsageLogs" Relationship="Self.FK__Equipment__Stage__236943A5" FromRole="ProductionStage" ToRole="EquipmentUsageLog" />
+          <NavigationProperty Name="ProductionOrder" Relationship="Self.FK__Productio__Order__0A9D95DB" FromRole="ProductionStage" ToRole="ProductionOrder" />
+          <NavigationProperty Name="TechOperation" Relationship="Self.FK__Productio__Opera__0B91BA14" FromRole="ProductionStage" ToRole="TechOperation" />
+          <NavigationProperty Name="ProductionStageStatu" Relationship="Self.FK__Productio__Statu__0E6E26BF" FromRole="ProductionStage" ToRole="ProductionStageStatus" />
+          <NavigationProperty Name="QualityDefects" Relationship="Self.FK__QualityDe__Stage__123EB7A3" FromRole="ProductionStage" ToRole="QualityDefect" />
+          <NavigationProperty Name="WorkLogs" Relationship="Self.FK__WorkLog__StageId__1F98B2C1" FromRole="ProductionStage" ToRole="WorkLog" />
+        </EntityType>
+        <EntityType Name="ProductionStageStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ProductionStages" Relationship="Self.FK__Productio__Statu__0E6E26BF" FromRole="ProductionStageStatus" ToRole="ProductionStage" />
+        </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierId" Type="Int32" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ExpectedDeliveryDate" Type="DateTime" Precision="0" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PurchaseOrderStatu" Relationship="Self.FK__PurchaseO__Statu__75A278F5" FromRole="PurchaseOrder" ToRole="PurchaseOrderStatus" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK__PurchaseO__Suppl__74AE54BC" FromRole="PurchaseOrder" ToRole="Supplier" />
+          <NavigationProperty Name="PurchaseReceipts" Relationship="Self.FK__PurchaseR__Order__7A672E12" FromRole="PurchaseOrder" ToRole="PurchaseReceipt" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK__PurchaseO__Statu__75A278F5" FromRole="PurchaseOrderStatus" ToRole="PurchaseOrder" />
+        </EntityType>
+        <EntityType Name="PurchaseReceipt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ReceiptDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="MaterialId" Type="Int32" Nullable="false" />
+          <Property Name="ReceivedQuantity" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="DefectQuantity" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="WarehouseId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Material" Relationship="Self.FK__PurchaseR__Mater__7B5B524B" FromRole="PurchaseReceipt" ToRole="Material" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="Self.FK__PurchaseR__Order__7A672E12" FromRole="PurchaseReceipt" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.FK__PurchaseR__Wareh__7C4F7684" FromRole="PurchaseReceipt" ToRole="Warehouse" />
+        </EntityType>
+        <EntityType Name="QualityDefect">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StageId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DetectedAt" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="ProductionStage" Relationship="Self.FK__QualityDe__Stage__123EB7A3" FromRole="QualityDefect" ToRole="ProductionStage" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.UserRole" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="StockBalance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaterialId" Type="Int32" Nullable="false" />
+          <Property Name="WarehouseId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <NavigationProperty Name="Material" Relationship="Self.FK__StockBala__Mater__01142BA1" FromRole="StockBalance" ToRole="Material" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.FK__StockBala__Wareh__02084FDA" FromRole="StockBalance" ToRole="Warehouse" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Inn" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContactInfo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ReliabilityRating" Type="Int32" />
+          <Property Name="PaymentTerms" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK__PurchaseO__Suppl__74AE54BC" FromRole="Supplier" ToRole="PurchaseOrder" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TechOperation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RouteId" Type="Int32" Nullable="false" />
+          <Property Name="OperationName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SequenceNumber" Type="Int32" Nullable="false" />
+          <Property Name="DurationHours" Type="Decimal" Precision="5" Scale="2" />
+          <NavigationProperty Name="ProductionStages" Relationship="Self.FK__Productio__Opera__0B91BA14" FromRole="TechOperation" ToRole="ProductionStage" />
+          <NavigationProperty Name="TechRoute" Relationship="Self.FK__TechOpera__Route__70DDC3D8" FromRole="TechOperation" ToRole="TechRoute" />
+        </EntityType>
+        <EntityType Name="TechRoute">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__TechRoute__Produ__6E01572D" FromRole="TechRoute" ToRole="Product" />
+          <NavigationProperty Name="TechOperations" Relationship="Self.FK__TechOpera__Route__70DDC3D8" FromRole="TechRoute" ToRole="TechOperation" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__User__EmployeeId__18EBB532" FromRole="User" ToRole="Employee" />
+          <NavigationProperty Name="Roles" Relationship="Self.UserRole" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PurchaseReceipts" Relationship="Self.FK__PurchaseR__Wareh__7C4F7684" FromRole="Warehouse" ToRole="PurchaseReceipt" />
+          <NavigationProperty Name="StockBalances" Relationship="Self.FK__StockBala__Wareh__02084FDA" FromRole="Warehouse" ToRole="StockBalance" />
+        </EntityType>
+        <EntityType Name="WorkLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StageId" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="HoursWorked" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__WorkLog__Employe__208CD6FA" FromRole="WorkLog" ToRole="Employee" />
+          <NavigationProperty Name="ProductionStage" Relationship="Self.FK__WorkLog__StageId__1F98B2C1" FromRole="WorkLog" ToRole="ProductionStage" />
+        </EntityType>
+        <Association Name="FK__BillOfMat__Mater__6B24EA82">
+          <End Role="Material" Type="Self.Material" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BillOfMaterials" Type="Self.BillOfMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BillOfMaterials">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BillOfMat__Produ__6A30C649">
+          <End Role="Product" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BillOfMaterials" Type="Self.BillOfMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BillOfMaterials">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productio__Assig__0C85DE4D">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionStage">
+              <PropertyRef Name="AssignedEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__EmployeeId__18EBB532">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WorkLog__Employe__208CD6FA">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="WorkLog" Type="Self.WorkLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkLog">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Equipment__Equip__245D67DE">
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="1" />
+          <End Role="EquipmentUsageLog" Type="Self.EquipmentUsageLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentUsageLog">
+              <PropertyRef Name="EquipmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productio__Assig__0D7A0286">
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionStage">
+              <PropertyRef Name="AssignedEquipmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Equipment__Stage__236943A5">
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="1" />
+          <End Role="EquipmentUsageLog" Type="Self.EquipmentUsageLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionStage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentUsageLog">
+              <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Material__TypeId__5812160E">
+          <End Role="MaterialType" Type="Self.MaterialType" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseR__Mater__7B5B524B">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="PurchaseReceipt" Type="Self.PurchaseReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseReceipt">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockBala__Mater__01142BA1">
+          <End Role="Material" Type="Self.Material" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StockBalance" Type="Self.StockBalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockBalance">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productio__Produ__07C12930">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductionOrder" Type="Self.ProductionOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionOrder">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TechRoute__Produ__6E01572D">
+          <End Role="Product" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TechRoute" Type="Self.TechRoute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TechRoute">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productio__Order__0A9D95DB">
+          <End Role="ProductionOrder" Type="Self.ProductionOrder" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionStage">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productio__Opera__0B91BA14">
+          <End Role="TechOperation" Type="Self.TechOperation" Multiplicity="1" />
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TechOperation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionStage">
+              <PropertyRef Name="OperationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productio__Statu__0E6E26BF">
+          <End Role="ProductionStageStatus" Type="Self.ProductionStageStatu" Multiplicity="1" />
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionStageStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionStage">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QualityDe__Stage__123EB7A3">
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QualityDefect" Type="Self.QualityDefect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionStage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QualityDefect">
+              <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WorkLog__StageId__1F98B2C1">
+          <End Role="ProductionStage" Type="Self.ProductionStage" Multiplicity="1" />
+          <End Role="WorkLog" Type="Self.WorkLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionStage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkLog">
+              <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseO__Statu__75A278F5">
+          <End Role="PurchaseOrderStatus" Type="Self.PurchaseOrderStatu" Multiplicity="1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrderStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseO__Suppl__74AE54BC">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseR__Order__7A672E12">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="1" />
+          <End Role="PurchaseReceipt" Type="Self.PurchaseReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseReceipt">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseR__Wareh__7C4F7684">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="PurchaseReceipt" Type="Self.PurchaseReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseReceipt">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockBala__Wareh__02084FDA">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StockBalance" Type="Self.StockBalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockBalance">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TechOpera__Route__70DDC3D8">
+          <End Role="TechRoute" Type="Self.TechRoute" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TechOperation" Type="Self.TechOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TechRoute">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TechOperation">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserRole">
+          <End Role="Role" Type="Self.Role" Multiplicity="*" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="ProdAndLogEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BillOfMaterials" EntityType="Self.BillOfMaterial" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Equipments" EntityType="Self.Equipment" />
+          <EntitySet Name="EquipmentUsageLogs" EntityType="Self.EquipmentUsageLog" />
+          <EntitySet Name="Materials" EntityType="Self.Material" />
+          <EntitySet Name="MaterialTypes" EntityType="Self.MaterialType" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductionOrders" EntityType="Self.ProductionOrder" />
+          <EntitySet Name="ProductionStages" EntityType="Self.ProductionStage" />
+          <EntitySet Name="ProductionStageStatus" EntityType="Self.ProductionStageStatu" />
+          <EntitySet Name="PurchaseOrders" EntityType="Self.PurchaseOrder" />
+          <EntitySet Name="PurchaseOrderStatus" EntityType="Self.PurchaseOrderStatu" />
+          <EntitySet Name="PurchaseReceipts" EntityType="Self.PurchaseReceipt" />
+          <EntitySet Name="QualityDefects" EntityType="Self.QualityDefect" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="StockBalances" EntityType="Self.StockBalance" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TechOperations" EntityType="Self.TechOperation" />
+          <EntitySet Name="TechRoutes" EntityType="Self.TechRoute" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Warehouses" EntityType="Self.Warehouse" />
+          <EntitySet Name="WorkLogs" EntityType="Self.WorkLog" />
+          <AssociationSet Name="FK__BillOfMat__Mater__6B24EA82" Association="Self.FK__BillOfMat__Mater__6B24EA82">
+            <End Role="Material" EntitySet="Materials" />
+            <End Role="BillOfMaterials" EntitySet="BillOfMaterials" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BillOfMat__Produ__6A30C649" Association="Self.FK__BillOfMat__Produ__6A30C649">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="BillOfMaterials" EntitySet="BillOfMaterials" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productio__Assig__0C85DE4D" Association="Self.FK__Productio__Assig__0C85DE4D">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="ProductionStage" EntitySet="ProductionStages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__EmployeeId__18EBB532" Association="Self.FK__User__EmployeeId__18EBB532">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WorkLog__Employe__208CD6FA" Association="Self.FK__WorkLog__Employe__208CD6FA">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="WorkLog" EntitySet="WorkLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Equipment__Equip__245D67DE" Association="Self.FK__Equipment__Equip__245D67DE">
+            <End Role="Equipment" EntitySet="Equipments" />
+            <End Role="EquipmentUsageLog" EntitySet="EquipmentUsageLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productio__Assig__0D7A0286" Association="Self.FK__Productio__Assig__0D7A0286">
+            <End Role="Equipment" EntitySet="Equipments" />
+            <End Role="ProductionStage" EntitySet="ProductionStages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Equipment__Stage__236943A5" Association="Self.FK__Equipment__Stage__236943A5">
+            <End Role="ProductionStage" EntitySet="ProductionStages" />
+            <End Role="EquipmentUsageLog" EntitySet="EquipmentUsageLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Material__TypeId__5812160E" Association="Self.FK__Material__TypeId__5812160E">
+            <End Role="MaterialType" EntitySet="MaterialTypes" />
+            <End Role="Material" EntitySet="Materials" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseR__Mater__7B5B524B" Association="Self.FK__PurchaseR__Mater__7B5B524B">
+            <End Role="Material" EntitySet="Materials" />
+            <End Role="PurchaseReceipt" EntitySet="PurchaseReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockBala__Mater__01142BA1" Association="Self.FK__StockBala__Mater__01142BA1">
+            <End Role="Material" EntitySet="Materials" />
+            <End Role="StockBalance" EntitySet="StockBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productio__Produ__07C12930" Association="Self.FK__Productio__Produ__07C12930">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductionOrder" EntitySet="ProductionOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TechRoute__Produ__6E01572D" Association="Self.FK__TechRoute__Produ__6E01572D">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="TechRoute" EntitySet="TechRoutes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productio__Order__0A9D95DB" Association="Self.FK__Productio__Order__0A9D95DB">
+            <End Role="ProductionOrder" EntitySet="ProductionOrders" />
+            <End Role="ProductionStage" EntitySet="ProductionStages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productio__Opera__0B91BA14" Association="Self.FK__Productio__Opera__0B91BA14">
+            <End Role="TechOperation" EntitySet="TechOperations" />
+            <End Role="ProductionStage" EntitySet="ProductionStages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productio__Statu__0E6E26BF" Association="Self.FK__Productio__Statu__0E6E26BF">
+            <End Role="ProductionStageStatus" EntitySet="ProductionStageStatus" />
+            <End Role="ProductionStage" EntitySet="ProductionStages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QualityDe__Stage__123EB7A3" Association="Self.FK__QualityDe__Stage__123EB7A3">
+            <End Role="ProductionStage" EntitySet="ProductionStages" />
+            <End Role="QualityDefect" EntitySet="QualityDefects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WorkLog__StageId__1F98B2C1" Association="Self.FK__WorkLog__StageId__1F98B2C1">
+            <End Role="ProductionStage" EntitySet="ProductionStages" />
+            <End Role="WorkLog" EntitySet="WorkLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseO__Statu__75A278F5" Association="Self.FK__PurchaseO__Statu__75A278F5">
+            <End Role="PurchaseOrderStatus" EntitySet="PurchaseOrderStatus" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseO__Suppl__74AE54BC" Association="Self.FK__PurchaseO__Suppl__74AE54BC">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseR__Order__7A672E12" Association="Self.FK__PurchaseR__Order__7A672E12">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+            <End Role="PurchaseReceipt" EntitySet="PurchaseReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseR__Wareh__7C4F7684" Association="Self.FK__PurchaseR__Wareh__7C4F7684">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="PurchaseReceipt" EntitySet="PurchaseReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockBala__Wareh__02084FDA" Association="Self.FK__StockBala__Wareh__02084FDA">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="StockBalance" EntitySet="StockBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TechOpera__Route__70DDC3D8" Association="Self.FK__TechOpera__Route__70DDC3D8">
+            <End Role="TechRoute" EntitySet="TechRoutes" />
+            <End Role="TechOperation" EntitySet="TechOperations" />
+          </AssociationSet>
+          <AssociationSet Name="UserRole" Association="Self.UserRole">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ProdAndLogModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ProdAndLogModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ProdAndLogModelContainer" CdmEntityContainer="ProdAndLogEntities">
+          <EntitySetMapping Name="BillOfMaterials">
+            <EntityTypeMapping TypeName="ProdAndLogModel.BillOfMaterial">
+              <MappingFragment StoreEntitySet="BillOfMaterials">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="ProdAndLogModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Qualifications" ColumnName="Qualifications" />
+                <ScalarProperty Name="RateType" ColumnName="RateType" />
+                <ScalarProperty Name="RateAmount" ColumnName="RateAmount" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Equipments">
+            <EntityTypeMapping TypeName="ProdAndLogModel.Equipment">
+              <MappingFragment StoreEntitySet="Equipment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="InventoryNumber" ColumnName="InventoryNumber" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="CommissionDate" ColumnName="CommissionDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MaintenanceSchedule" ColumnName="MaintenanceSchedule" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EquipmentUsageLogs">
+            <EntityTypeMapping TypeName="ProdAndLogModel.EquipmentUsageLog">
+              <MappingFragment StoreEntitySet="EquipmentUsageLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StageId" ColumnName="StageId" />
+                <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
+                <ScalarProperty Name="UsageHours" ColumnName="UsageHours" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materials">
+            <EntityTypeMapping TypeName="ProdAndLogModel.Material">
+              <MappingFragment StoreEntitySet="Material">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="MinStock" ColumnName="MinStock" />
+                <ScalarProperty Name="MarketPrice" ColumnName="MarketPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaterialTypes">
+            <EntityTypeMapping TypeName="ProdAndLogModel.MaterialType">
+              <MappingFragment StoreEntitySet="MaterialType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ProdAndLogModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Article" ColumnName="Article" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductionOrders">
+            <EntityTypeMapping TypeName="ProdAndLogModel.ProductionOrder">
+              <MappingFragment StoreEntitySet="ProductionOrder">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="PriorityLevel" ColumnName="PriorityLevel" />
+                <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductionStages">
+            <EntityTypeMapping TypeName="ProdAndLogModel.ProductionStage">
+              <MappingFragment StoreEntitySet="ProductionStage">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="OperationId" ColumnName="OperationId" />
+                <ScalarProperty Name="AssignedEmployeeId" ColumnName="AssignedEmployeeId" />
+                <ScalarProperty Name="AssignedEquipmentId" ColumnName="AssignedEquipmentId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductionStageStatus">
+            <EntityTypeMapping TypeName="ProdAndLogModel.ProductionStageStatu">
+              <MappingFragment StoreEntitySet="ProductionStageStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrders">
+            <EntityTypeMapping TypeName="ProdAndLogModel.PurchaseOrder">
+              <MappingFragment StoreEntitySet="PurchaseOrder">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="ExpectedDeliveryDate" ColumnName="ExpectedDeliveryDate" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrderStatus">
+            <EntityTypeMapping TypeName="ProdAndLogModel.PurchaseOrderStatu">
+              <MappingFragment StoreEntitySet="PurchaseOrderStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseReceipts">
+            <EntityTypeMapping TypeName="ProdAndLogModel.PurchaseReceipt">
+              <MappingFragment StoreEntitySet="PurchaseReceipt">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+                <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+                <ScalarProperty Name="ReceivedQuantity" ColumnName="ReceivedQuantity" />
+                <ScalarProperty Name="DefectQuantity" ColumnName="DefectQuantity" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QualityDefects">
+            <EntityTypeMapping TypeName="ProdAndLogModel.QualityDefect">
+              <MappingFragment StoreEntitySet="QualityDefect">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StageId" ColumnName="StageId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DetectedAt" ColumnName="DetectedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="ProdAndLogModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockBalances">
+            <EntityTypeMapping TypeName="ProdAndLogModel.StockBalance">
+              <MappingFragment StoreEntitySet="StockBalance">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="ProdAndLogModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Inn" ColumnName="Inn" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ContactInfo" ColumnName="ContactInfo" />
+                <ScalarProperty Name="ReliabilityRating" ColumnName="ReliabilityRating" />
+                <ScalarProperty Name="PaymentTerms" ColumnName="PaymentTerms" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ProdAndLogModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TechOperations">
+            <EntityTypeMapping TypeName="ProdAndLogModel.TechOperation">
+              <MappingFragment StoreEntitySet="TechOperation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="OperationName" ColumnName="OperationName" />
+                <ScalarProperty Name="SequenceNumber" ColumnName="SequenceNumber" />
+                <ScalarProperty Name="DurationHours" ColumnName="DurationHours" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TechRoutes">
+            <EntityTypeMapping TypeName="ProdAndLogModel.TechRoute">
+              <MappingFragment StoreEntitySet="TechRoute">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ProdAndLogModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouses">
+            <EntityTypeMapping TypeName="ProdAndLogModel.Warehouse">
+              <MappingFragment StoreEntitySet="Warehouse">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkLogs">
+            <EntityTypeMapping TypeName="ProdAndLogModel.WorkLog">
+              <MappingFragment StoreEntitySet="WorkLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StageId" ColumnName="StageId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="HoursWorked" ColumnName="HoursWorked" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UserRole" TypeName="ProdAndLogModel.UserRole" StoreEntitySet="UserRole">
+            <EndProperty Name="Role">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище ProdAndLogModel.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище ProdAndLogModel.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище ProdAndLogModel.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Хранилище ProdAndLogModel.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProdAndLogModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Хранилище ProdAndLogModel.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProdAndLogModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище ProdAndLogModel.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище ProdAndLogModel.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fde4ec46bddb4613a33dbbf939a090c1" Name="Diagram1" ZoomLevel="62">
+        <EntityTypeShape EntityType="ProdAndLogModel.BillOfMaterial" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.Employee" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.Equipment" Width="1.5" PointX="5.25" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.EquipmentUsageLog" Width="1.5" PointX="9.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.Material" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.MaterialType" Width="1.5" PointX="1.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.Product" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.ProductionOrder" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.ProductionStage" Width="1.5" PointX="7.5" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.ProductionStageStatu" Width="1.5" PointX="5.25" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.PurchaseOrder" Width="1.5" PointX="7.75" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.PurchaseOrderStatu" Width="1.5" PointX="5.5" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.PurchaseReceipt" Width="1.5" PointX="10" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.QualityDefect" Width="1.5" PointX="9.75" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.Role" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.StockBalance" Width="1.5" PointX="13" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.Supplier" Width="1.5" PointX="5.5" PointY="25.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.sysdiagram" Width="1.5" PointX="3.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.TechOperation" Width="1.5" PointX="5.25" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.TechRoute" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.User" Width="1.5" PointX="7.5" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.Warehouse" Width="1.5" PointX="7.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProdAndLogModel.WorkLog" Width="1.5" PointX="12.75" PointY="11.25" IsExpanded="true" />
+        <AssociationConnector Association="ProdAndLogModel.FK__BillOfMat__Mater__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__BillOfMat__Produ__6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__Productio__Assig__0C85DE4D" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__User__EmployeeId__18EBB532" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__WorkLog__Employe__208CD6FA" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__Equipment__Equip__245D67DE" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__Productio__Assig__0D7A0286" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__Equipment__Stage__236943A5" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__Material__TypeId__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__PurchaseR__Mater__7B5B524B" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__StockBala__Mater__01142BA1" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__Productio__Produ__07C12930" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__TechRoute__Produ__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__Productio__Order__0A9D95DB" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__Productio__Opera__0B91BA14" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__Productio__Statu__0E6E26BF" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__QualityDe__Stage__123EB7A3" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__WorkLog__StageId__1F98B2C1" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__PurchaseO__Statu__75A278F5" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__PurchaseO__Suppl__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__PurchaseR__Order__7A672E12" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__PurchaseR__Wareh__7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__StockBala__Wareh__02084FDA" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.FK__TechOpera__Route__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="ProdAndLogModel.UserRole" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
